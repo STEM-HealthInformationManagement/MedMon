@@ -25,7 +25,6 @@ CLONING INSTRUCTIONS
 17. Browse for the folder where the repository was cloned, click on MedMon folder and click OK.
 (DO NOT EXPAND THE REPO FOLDER AND CLICK INSIDE. BOTH FOLDERS MUST BE INCLUDED FOR NO ERRORS).
 18. Check BOTH projects that were listed, and click NEXT or Finish.
-=========================================================
 ----------------------------------------------------
 REMINDER
 ----------------------------------------------------
