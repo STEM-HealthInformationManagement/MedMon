@@ -11,9 +11,15 @@ import java.util.logging.Logger;
 import java.util.logging.SimpleFormatter;
 
 import org.him.filemanager.InputOutput;
+import org.him.notifier.SoundNotifier;
+import org.him.notifier.VibrationManager;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.app.TaskStackBuilder;
 import android.content.Context;
 import android.content.Intent;
 import android.media.Ringtone;
@@ -22,6 +28,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Vibrator;
+import android.support.v4.app.NotificationCompat;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -68,160 +75,65 @@ public class MainActivity extends Activity {
 			
 			@Override
 			public void onClick(View v) {
-				cfg = new File("/");
-				cfg.setExecutable(true);
-				cfg.setWritable(true);
-				InputOutput.Write(pickedHour + ":" + pickedMinute, "med.vpr");
+				//VibrationManager.Vibrate(MainActivity.this);
+				//SoundNotifier.SoundNotify(MainActivity.this);
+				String day = "";
+				if(pickedHour > 12 && pickedHour < 24)
+				{
+					day = "PM";
+					pickedHour -= 12;
+				}
+				else if (pickedHour > 0 && pickedHour < 12 )
+				{
+					day = "AM";
+					pickedHour += 12;
+				}
+				InputOutput.Write("med.vpr", pickedHour + ":" + pickedMinute + " " + day);
+
+				showNotification();
+				
 				Intent i = new Intent(MainActivity.this, NextActivity.class);
-	            startActivity(i);
-			}
+	            startActivity(i);			}
 		});
 		System.out.println(System.getProperty("user.dir"));
 		//tv1.setText(System.getProperty("user.dir"));
-		tv1.setText(getApplicationInfo().dataDir);
+		//tv1.setText(getApplicationInfo().dataDir);
 		//File f = new File(Environment.getRootDirectory(), "");
-		//tv1.setText(Environment.getRootDirectory().toString());
+		tv1.setText(Environment.getRootDirectory().toString());
 		
 	}
 	
-	/**
-	 * Writes valid string into a specified file in the same directory
-	 * the application resources are contained in.
-	 * 
-	 * @param s : String - String to write into file.
-	 * @param file : String - File name and path succeeding resource directory.
-	 
-	public static void Write(String s, String file)
-	{
-		try 
-		{
-			cfg = new File(context.getFilesDir() + "/" + file);
-			cfg.createNewFile();
-			cfgWrite = new FileWriter(file);
-			cfgWrite.write(s);
-			cfgWrite.close();
-		}
-		catch (IOException e) 
-		{
-			e.printStackTrace();
-			
-			/**Play a sound in the following line.
-			//playWindowsError();
-			
-			
-			
-		    try 
-		    {
-
-		      //Log all OTHER errors 
-		      fs = new FileHandler("err/oerdump.vpr", true);
-		      logs.setLevel(Level.ALL);		      
-		      logs.addHandler(fs);
-		      
-		      
-		      SimpleFormatter sf = new SimpleFormatter();
-		      fs.setFormatter(sf);
-
-		      //Log a string when other error occurs 
-			    logs.log(Level.SEVERE, "UNABLE TO READ PREFERENCE FILES");
-
-		    }
-		    catch (SecurityException e1) 
-		    {
-		      e1.printStackTrace();
-		    }
-		    catch (IOException e2) 
-		    {
-		      e2.printStackTrace();
-		    }
-		}
+	public void showNotification(){
+		 
+        // define sound URI, the sound to be played when there's a notification
+        Uri soundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+         
+        // intent triggered, you can add other intent for other actions
+        Intent intent = new Intent(MainActivity.this, NextActivity.class);
+        PendingIntent pIntent = PendingIntent.getActivity(MainActivity.this, 0, intent, 0);
+         
+        // this is it, we'll build the notification!
+        // in the addAction method, if you don't want any icon, just set the first param to 0
+        Notification mNotification = new Notification.Builder(this)
+             
+            .setContentTitle("Medicine Alert!")
+            .setContentText("Please take your medicine.")
+            .setSmallIcon(R.drawable.ic_launcher)
+            .setContentIntent(pIntent)
+            .setSound(soundUri)
+             
+            .addAction(R.drawable.ic_launcher, "View", pIntent)
+            .addAction(0, "Remind", pIntent)
+             
+            .build();
+        	mNotification.tickerText = "Medical Alert! \n Please take your medicine.";
+        	mNotification.flags |= Notification.FLAG_AUTO_CANCEL;
+        NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+ 
+        // If you want to hide the notification after it was selected, do the code below
+        // myNotification.flags |= Notification.FLAG_AUTO_CANCEL;
+         
+        notificationManager.notify(0, mNotification);
+    }
 	
-	}
-	
-	public void Read()
-	{
-		try 
-		{
-			//READ a1 Checkbox
-			cfgRead = new FileReader("wh/rdt.vpr");
-			cfgScan = new Scanner(cfgRead);
-			String pref = cfgScan.next();
-			
-			//READ a2 Checkbox
-			/*cfgRead = new FileReader("wh/rdt2.vpr");
-			cfgScan = new Scanner(cfgRead);
-			String pref2 = cfgScan.next();*/
-			
-			
-			//READ e1 Checkbox
-			/*PokerFrame.cfgRead = new FileReader("wh/rdt1.vpr");
-			PokerFrame.cfgScan = new Scanner(PokerFrame.cfgRead);
-			String pref1 = PokerFrame.cfgScan.next();
-			
-			//ALL GENERAL READS HERE
-			if(pref.contains("a1=1"))
-			{
-				//a1.setSelected(true);
-				
-			}
-			else
-			{
-				//a1.setSelected(false);
-			}
-			
-			//ALL SETTINGS READS HERE
-			
-			
-			
-			//ALL CONNECTION READS HERE
-			
-			
-			
-			//ALL OTHER READS HERE
-			/*if(pref1.contains("e1=1"))
-			{
-				e1.setSelected(true);
-			}
-			else
-			{
-				e1.setSelected(false);
-			}
-			
-			cfgScan.close();
-		} 
-		catch (IOException e) 
-		{
-			e.printStackTrace();
-			
-			
-			
-		    try 
-		    {
-
-		      //Log all OTHER errors 
-		      f = new FileHandler("err/oerdump.vpr", true);
-		      log.setLevel(Level.ALL);		      
-		      log.addHandler(f);
-		      
-		      
-		      SimpleFormatter sf = new SimpleFormatter();
-		      f.setFormatter(sf);
-
-		      //Log a string when connection error occurs 
-			    log.log(Level.SEVERE, "UNABLE TO READ PREFERENCE FILES");
-
-
-		    }
-		    catch (SecurityException e1) 
-		    {
-		      e1.printStackTrace();
-		    }
-		    catch (IOException e2) 
-		    {
-		      e2.printStackTrace();
-		    }
-		}
-		
-		
-	}*/
 }

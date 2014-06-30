@@ -3,10 +3,14 @@ package org.him.filemanager;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
 import java.util.Scanner;
 import java.util.logging.FileHandler;
 import java.util.logging.Level;
@@ -15,9 +19,13 @@ import java.util.logging.SimpleFormatter;
 
 import org.him.medicalmonitor.MainActivity;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
+import android.os.Environment;
+import android.util.Log;
 import android.widget.TextView;
 
+@SuppressLint({ "WorldReadableFiles", "NewApi" })
 public class InputOutput {
 	static File cfg;
 	static FileWriter cfgWrite;
@@ -33,14 +41,8 @@ public class InputOutput {
 	public InputOutput() {
 		
 	}
-		/**
-		 * Writes valid string into a specified file in the same directory
-		 * the application resources are contained in.
-		 * 
-		 * @param s : String - String to write into file.
-		 * @param file : String - File name and path succeeding resource directory.
-		 */
-		public static void Write(String s, String file)
+		
+		public static void WriteLight(String s, String file)
 		{
 			try 
 			{
@@ -175,4 +177,87 @@ public class InputOutput {
 			
 			
 		}
+		
+		/**
+		 * Writes valid string into a specified file in the same directory
+		 * the application resources are contained in.
+		 * 
+		 * @param file : String - File name and path succeeding resource directory.
+		 * @param data : String - String to write into file.
+		 * 
+		 */
+		public static void Write(String file, String data) {
+			File f1 = new File(Environment.getExternalStorageDirectory().toString() + "/mdm/state/");
+			File f2 = new File(Environment.getExternalStorageDirectory().toString() + "/mdm/state/" + file);
+		    try {
+		    	f1.mkdirs();
+		    	f2.createNewFile();
+		    	//context.openFileInput(file);
+		    	FileWriter fw = new FileWriter(Environment.getExternalStorageDirectory().toString() + "/mdm/state/" + file);
+		    	fw.write(data);
+		    	fw.close();
+				//FileOutputStream fOut = context.openFileOutput(file, Context.MODE_WORLD_READABLE);
+		        //OutputStreamWriter outputStreamWriter = new OutputStreamWriter(fOut);
+		        		//(context.openFileOutput(context.getFilesDir().getAbsolutePath() + "/" + file, Context.MODE_PRIVATE));
+		        //outputStreamWriter.write(data);
+		        //outputStreamWriter.close();
+		    }
+		    catch (IOException e) {
+		        Log.e("Exception", "File write failed: " + e.toString());
+		    }
+		}
+		
+		/**
+		 * Reads from a specified file in the same directory
+		 * the application resources are contained in.
+		 * 
+		 * @param file : String - File name and path succeeding resource directory.
+		 * 
+		 */
+		public static String Read(String file) {
+
+		    String result = "";
+
+		    /*try {
+		        InputStream inputStream = context.openFileInput(Environment.getExternalStorageDirectory().toString() + "/mdm/state/" + file);
+
+		        if ( inputStream != null ) {
+		            InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
+		            BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
+		            String getString = "";
+		            StringBuilder stringBuilder = new StringBuilder();
+
+		            while ( (getString = bufferedReader.readLine()) != null ) {
+		                stringBuilder.append(getString);
+		            }
+
+		            inputStream.close();
+		            result = stringBuilder.toString();
+		        }
+		    }
+		    catch (FileNotFoundException e) {
+		        Log.e("read_error", "File not found: " + e.toString());
+		    } catch (IOException e) {
+		        Log.e("io_error", "Can not read file: " + e.toString());
+		    }
+*/
+		    File f = new File(Environment.getExternalStorageDirectory().toString() + "/mdm/state/" + file);
+		    StringBuilder sb = new StringBuilder();
+		    try {
+		        BufferedReader br = new BufferedReader(new FileReader(f));
+		        String line;
+
+		        while ((line = br.readLine()) != null) {
+		            sb.append(line);
+		            result = sb.toString();
+		        }
+		        br.close();
+		    }
+		    catch (IOException e) {
+		        e.printStackTrace();
+		    }
+		    return result;
+		}
+		
+		
 }
