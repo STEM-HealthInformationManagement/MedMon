@@ -78,15 +78,18 @@ public class MainActivity extends Activity {
 				//VibrationManager.Vibrate(MainActivity.this);
 				//SoundNotifier.SoundNotify(MainActivity.this);
 				String day = "";
-				if(pickedHour > 12 && pickedHour < 24)
+				if(pickedHour >= 12 && pickedHour < 24)
 				{
 					day = "PM";
 					pickedHour -= 12;
 				}
-				else if (pickedHour > 0 && pickedHour < 12 )
+				else if (pickedHour >= 0 && pickedHour < 12 )
 				{
 					day = "AM";
-					pickedHour += 12;
+					if(pickedHour == 0)
+					{
+						pickedHour += 12;
+					}
 				}
 				InputOutput.Write("med.vpr", pickedHour + ":" + pickedMinute + " " + day);
 
