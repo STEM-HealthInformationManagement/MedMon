@@ -13,15 +13,6 @@
         android:text="@string/medicineSetUp"
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
-    <TextView
-        android:id="@+id/textView1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/textView2"
-        android:layout_marginTop="118dp"
-        android:text="@string/prescribedTimeMssg"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
-
     <Button
         android:id="@+id/setupButton"
         android:layout_width="wrap_content"
@@ -30,11 +21,69 @@
         android:layout_centerHorizontal="true"
         android:text="@string/button2" />
 
-    <TimePicker
-        android:id="@+id/timePicker1"
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignRight="@+id/setupButton"
+        android:layout_below="@+id/textView2"
+        android:layout_marginTop="20dp"
+        android:text="@string/prescribedTimeMssg"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <RadioButton
+        android:id="@+id/radioButton1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
-        android:layout_below="@+id/textView1" />
+        android:layout_below="@+id/textView1"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="18dp"
+        android:text="@string/onceADay" />
+
+    <RadioButton
+        android:id="@+id/radioButton6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/setupButton"
+        android:layout_alignLeft="@+id/radioButton5"
+        android:layout_marginBottom="40dp"
+        android:text="@string/sixTimesADay" />
+
+    <RadioButton
+        android:id="@+id/radioButton5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/radioButton6"
+        android:layout_alignLeft="@+id/radioButton4"
+        android:layout_marginBottom="19dp"
+        android:text="@string/fiveTimesADay" />
+
+    <RadioButton
+        android:id="@+id/radioButton4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/radioButton5"
+        android:layout_alignLeft="@+id/radioButton3"
+        android:layout_marginBottom="22dp"
+        android:text="@string/fourTimesADay" />
+
+    <RadioButton
+        android:id="@+id/radioButton3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/radioButton4"
+        android:layout_alignLeft="@+id/radioButton2"
+        android:layout_marginBottom="19dp"
+        android:text="@string/threeTimesADay" />
+
+    <RadioButton
+        android:id="@+id/radioButton2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/radioButton3"
+        android:layout_alignLeft="@+id/radioButton1"
+        android:layout_marginBottom="14dp"
+        android:text="@string/twiceADay" />
 
 </RelativeLayout>
