@@ -60,4 +60,9 @@ public class NextActivity extends Activity {
 		
 		counterText.setText(InputOutput.Read("med.vpr"));
 	}
+	
+	public void onBackPressed()
+	{
+		return;
+	}
 }
