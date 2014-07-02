@@ -1069,6 +1069,7 @@ containing a value of this type.
         public static final int abc_textfield_searchview_right_holo_dark=0x7f020055;
         public static final int abc_textfield_searchview_right_holo_light=0x7f020056;
         public static final int ic_launcher=0x7f020057;
+        public static final int medmon_ico=0x7f020058;
     }
     public static final class id {
         public static final int action_bar=0x7f05001c;
@@ -1163,6 +1164,7 @@ containing a value of this type.
          showAsAction="ifRoom" items can fit. "always" items can override this. 
          */
         public static final int abc_max_action_buttons=0x7f090000;
+        public static final int id_uid=0x7f090001;
     }
     public static final class layout {
         public static final int abc_action_bar_decor=0x7f030000;
@@ -1191,7 +1193,8 @@ containing a value of this type.
         public static final int abc_simple_decor=0x7f030017;
         public static final int activity_main=0x7f030018;
         public static final int activity_next=0x7f030019;
-        public static final int support_simple_spinner_dropdown_item=0x7f03001a;
+        public static final int static_viewer=0x7f03001a;
+        public static final int support_simple_spinner_dropdown_item=0x7f03001b;
     }
     public static final class string {
         /**  Content description for the action bar "home" affordance. [CHAR LIMIT=NONE] 
@@ -1239,12 +1242,14 @@ containing a value of this type.
         public static final int button1=0x7f0a0013;
         public static final int button2=0x7f0a0017;
         public static final int hello_world=0x7f0a000e;
+        public static final int local_service_started=0x7f0a0019;
         public static final int medMon=0x7f0a0010;
         public static final int medicationCounter=0x7f0a0012;
         public static final int medicationMssg2User=0x7f0a0011;
         public static final int medicineSetUp=0x7f0a0015;
         public static final int prescribedTimeMssg=0x7f0a0016;
         public static final int title_activity_next=0x7f0a0014;
+        public static final int title_activity_static_viewer=0x7f0a001a;
         public static final int title_activity_vibrate=0x7f0a0018;
     }
     public static final class style {

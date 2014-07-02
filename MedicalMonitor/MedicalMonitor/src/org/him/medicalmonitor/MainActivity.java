@@ -1,43 +1,34 @@
 package org.him.medicalmonitor;
 
 import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.util.Scanner;
-import java.util.logging.FileHandler;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import java.util.logging.SimpleFormatter;
+import java.util.Timer;
+
+
+import java.util.TimerTask;
 
 import org.him.filemanager.InputOutput;
-import org.him.notifier.SoundNotifier;
-import org.him.notifier.VibrationManager;
+
+
+
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
-import android.app.TaskStackBuilder;
-import android.content.Context;
 import android.content.Intent;
-import android.media.Ringtone;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
-import android.os.Vibrator;
-import android.support.v4.app.NotificationCompat;
-import android.view.Menu;
-import android.view.MenuItem;
+import android.os.Handler;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
 /**THIS USES ACTIVITY_NEXT.XML. IT IS THE SECOND LAYOUT, NOT THE MAIN.*/
-@SuppressLint("NewApi")
+@SuppressLint({ "NewApi", "DefaultLocale" })
 public class MainActivity extends Activity {
 	
 /*	
@@ -53,6 +44,11 @@ public class MainActivity extends Activity {
 	static File cfg;
 	int pickedHour;
 	int pickedMinute;
+	String trailingZero = "";
+	Timer timer = new Timer();
+	private final int interval = 3000;
+	private Handler handler = new Handler();
+	@SuppressLint("DefaultLocale")
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -60,15 +56,40 @@ public class MainActivity extends Activity {
 		Button saveButton = (Button) findViewById(R.id.setupButton);
 		TimePicker tp = (TimePicker) findViewById(R.id.timePicker1);
 		TextView tv1 = (TextView) findViewById(R.id.textView1);
+		startService(new Intent(this, ReminderService.class));
 		pickedHour = tp.getCurrentHour();
 		pickedMinute = tp.getCurrentMinute();
+		
+		Runnable runnable = new Runnable(){
+		    public void run() {
+				Intent mServiceIntent = new Intent();
+				mServiceIntent.setAction("org.him.medicalmonitor.ReminderService");
+				  startService(mServiceIntent);
+		    }
+		};
+		//handler.postAtTime(runnable, System.currentTimeMillis()+interval);
+		handler.postDelayed(runnable, interval);
+		
+/*		Intent mServiceIntent = new Intent();
+		mServiceIntent.setAction("org.him.medicalmonitor.ReminderService");
+		  startService(mServiceIntent);*/
+		
 		//context = this.getApplicationContext();
 		tp.setOnTimeChangedListener(new TimePicker.OnTimeChangedListener() {
 			
 			@Override
 			public void onTimeChanged(TimePicker view, int hourOfDay, int minute) {
+				//String.format("%03d", minute);
 				pickedHour = hourOfDay;
 				pickedMinute = minute;
+				if(minute > -1 && minute < 10)
+				{
+					trailingZero = "0";
+				}
+				else
+				{
+					trailingZero = "";
+				}
 			}
 		});
 		saveButton.setOnClickListener(new View.OnClickListener() {
@@ -91,12 +112,12 @@ public class MainActivity extends Activity {
 						pickedHour += 12;
 					}
 				}
-				InputOutput.Write("med.vpr", pickedHour + ":" + pickedMinute + " " + day);
-
+				InputOutput.Write("med.vpr", pickedHour + ":" + trailingZero + pickedMinute + " " + day);
 				showNotification();
 				
 				Intent i = new Intent(MainActivity.this, NextActivity.class);
-	            startActivity(i);			}
+	            startActivity(i);	
+	            }
 		});
 		System.out.println(System.getProperty("user.dir"));
 		//tv1.setText(System.getProperty("user.dir"));
@@ -138,5 +159,10 @@ public class MainActivity extends Activity {
          
         notificationManager.notify(0, mNotification);
     }
+	
+	public void onBackPressed()
+	{
+		return;
+	}
 	
 }

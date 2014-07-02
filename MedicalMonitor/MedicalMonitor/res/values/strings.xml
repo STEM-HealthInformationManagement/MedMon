@@ -13,5 +13,7 @@
     <string name="prescribedTimeMssg">Prescribed Time:</string>
     <string name="button2">Save</string>
     <string name="title_activity_vibrate">Vibrate</string>
+    <string name="local_service_started">svc (on)</string>
+    <string name="title_activity_static_viewer">Static Viewer</string>
 
 </resources>
