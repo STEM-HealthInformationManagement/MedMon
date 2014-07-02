@@ -44,3 +44,7 @@ I would also recommend using Branches because it is Still better, so we can have
 --Saurabh Rathod --
 
 ******************************************************
+TO DO List For ISRAEL
+======================================================
+- Work on the Time Counter.
+- Change the user interface to put buttons in the medical setup activity.
