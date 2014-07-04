@@ -54,11 +54,11 @@ public class MainActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_next);
 		Button saveButton = (Button) findViewById(R.id.setupButton);
-		TimePicker tp = (TimePicker) findViewById(R.id.timePicker1);
+		//TimePicker tp = (TimePicker) findViewById(R.id.timePicker1);
 		TextView tv1 = (TextView) findViewById(R.id.textView1);
 		startService(new Intent(this, ReminderService.class));
-		pickedHour = tp.getCurrentHour();
-		pickedMinute = tp.getCurrentMinute();
+		//pickedHour = tp.getCurrentHour();
+		//pickedMinute = tp.getCurrentMinute();
 		
 		Runnable runnable = new Runnable(){
 		    public void run() {
@@ -75,7 +75,7 @@ public class MainActivity extends Activity {
 		  startService(mServiceIntent);*/
 		
 		//context = this.getApplicationContext();
-		tp.setOnTimeChangedListener(new TimePicker.OnTimeChangedListener() {
+		/*tp.setOnTimeChangedListener(new TimePicker.OnTimeChangedListener() {
 			
 			@Override
 			public void onTimeChanged(TimePicker view, int hourOfDay, int minute) {
@@ -91,7 +91,7 @@ public class MainActivity extends Activity {
 					trailingZero = "";
 				}
 			}
-		});
+		}); */
 		saveButton.setOnClickListener(new View.OnClickListener() {
 			
 			@Override
