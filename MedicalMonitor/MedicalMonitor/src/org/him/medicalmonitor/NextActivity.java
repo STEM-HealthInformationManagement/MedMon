@@ -39,6 +39,7 @@ public class NextActivity extends Activity {
     static FileHandler fs;
 	static Logger logs;
 	TextView counterText;
+	TextView getTickerText;
 	static Context context;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +47,7 @@ public class NextActivity extends Activity {
 		setContentView(R.layout.activity_main);
 		Button b = (Button) findViewById(R.id.setupButton);
 		counterText = (TextView) findViewById(R.id.counterTextView);
+		getTickerText = (TextView) findViewById(R.id.tickerTextView);
 		context = this.getApplicationContext();
 		b.setOnClickListener(new View.OnClickListener() {
 			
@@ -59,10 +61,12 @@ public class NextActivity extends Activity {
 		});
 		
 		counterText.setText(InputOutput.Read("med.vpr"));
+		getTickerText.setText(ReminderService.getCountingTicker() + "");
 	}
 	
 	public void onBackPressed()
 	{
 		return;
 	}
+
 }

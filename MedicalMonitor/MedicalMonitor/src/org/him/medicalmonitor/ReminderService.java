@@ -1,5 +1,9 @@
 package org.him.medicalmonitor;
 
+import java.util.Timer;
+
+import org.him.filemanager.InputOutput;
+
 import android.R;
 import android.annotation.SuppressLint;
 import android.app.Notification;
@@ -10,6 +14,8 @@ import android.content.Intent;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Binder;
+import android.os.CountDownTimer;
+import android.os.Handler;
 import android.os.IBinder;
 import android.util.Log;
 import android.widget.Toast;
@@ -18,11 +24,18 @@ import android.widget.Toast;
 @SuppressLint("NewApi")
 public class ReminderService extends Service {
     private NotificationManager mNM;
+    
+	Timer timer = new Timer();
+	int countEvery;
+
+	private final int interval = 3000;
+	private Handler handler = new Handler();
 
     // Unique Identification Number for the Notification.
     // We use it on Notification start, and to cancel it.
     private int NOTIFICATION = R.string.yes;
-
+    public static long getTicks;
+    
     /**
      * Class for clients to access.  Because we know this service always
      * runs in the same process as its clients, we don't need to deal with
@@ -39,18 +52,68 @@ public class ReminderService extends Service {
     	
     	System.out.println("Starting Service...");
         mNM = (NotificationManager)getSystemService(NOTIFICATION_SERVICE);
-
-        // Display a notification about us starting.  We put an icon in the status bar.
-        showNotification();
+        
+/*        Runnable runnable = new Runnable(){
+		    public void run() {
+		        // Display a notification about us starting.  We put an icon in the status bar.
+		        showNotification();
+		    }
+		};
+		//handler.postAtTime(runnable, System.currentTimeMillis()+interval);
+		handler.postDelayed(runnable, interval);*/
         System.out.println("Service Started!");
+        
+        String checkReminder = InputOutput.Read("rem.vpr");
+        if(checkReminder.equals("1"))
+        {
+        	countEvery = 6 * 21600; 
+        }
+        else if(checkReminder.equals("2"))
+        {
+        	countEvery = 5 * 18000;
+        }
+        else if(checkReminder.equals("3"))
+        {
+        	countEvery = 4 * 14400;
+        }
+        else if(checkReminder.equals("4"))
+        {
+        	countEvery = 3 * 10800;
+        }
+        else if(checkReminder.equals("5"))
+        {
+        	countEvery = 2 * 7200;
+        }
+        else if(checkReminder.equals("6"))
+        {
+        	countEvery = 10000;
+        }
+        else
+        {
+        	countEvery = 0;
+        }
+        new CountDownTimer(countEvery, 1000) {
+
+            public void onTick(long millisUntilFinished) {
+            	//Do Nothing Yet
+            	getTicks += millisUntilFinished; 
+            	getTicks--;
+            }
+
+            public void onFinish() {
+            	showMedicalNotification();
+            }
+         }.start();
+        
     }
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         Log.i("LocalService", "Received start id " + startId + ": " + intent);
-        // We want this service to continue running until it is explicitly
-        // stopped, so return sticky.
+
         System.out.println("Service Started!");
+        
+        //Return STICKY to keep running this service until forcefully stopped.
         return START_STICKY;
     }
 
@@ -60,7 +123,7 @@ public class ReminderService extends Service {
         mNM.cancel(NOTIFICATION);
 
         // Tell the user we stopped.
-        Toast.makeText(this, R.string.no, Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "Medicine Reminder Saved!", Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -103,7 +166,10 @@ public class ReminderService extends Service {
          
         // intent triggered, you can add other intent for other actions
         Intent intent = new Intent(ReminderService.this, NextActivity.class);
+        Intent intent2 = new Intent(ReminderService.this, MainActivity.class);
         PendingIntent pIntent = PendingIntent.getActivity(ReminderService.this, 0, intent, 0);
+        PendingIntent pIntent2 = PendingIntent.getActivity(ReminderService.this, 0, intent2, 0);
+        
          
         // this is it, we'll build the notification!
         // in the addAction method, if you don't want any icon, just set the first param to 0
@@ -116,10 +182,11 @@ public class ReminderService extends Service {
             .setSound(soundUri)
              
             .addAction(R.drawable.ic_media_play, "View", pIntent)
-            .addAction(0, "Remind", pIntent)
+            .addAction(R.drawable.ic_menu_close_clear_cancel, "Stop Reminding", pIntent2)
              
             .build();
-        	mNotification.tickerText = "Alert! \n Medical Monitor Service Has Been Started!";
+        	mNotification.tickerText = "Alert! \n"
+        			+ " Medical Monitor Service Has Been Started!";
         	mNotification.flags |= Notification.FLAG_AUTO_CANCEL;
         NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
  
@@ -128,4 +195,41 @@ public class ReminderService extends Service {
          
         notificationManager.notify(1, mNotification);
     }
+	
+	public void showMedicalNotification(){
+		 
+        // define sound URI, the sound to be played when there's a notification
+        Uri soundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+         
+        // intent triggered, you can add other intent for other actions
+        Intent intent = new Intent(ReminderService.this, NextActivity.class);
+        PendingIntent pIntent = PendingIntent.getActivity(ReminderService.this, 0, intent, 0);
+        
+         
+        // this is it, we'll build the notification!
+        // in the addAction method, if you don't want any icon, just set the first param to 0
+        Notification mNotification = new Notification.Builder(this)
+             
+            .setContentTitle("Alert!")
+            .setContentText("Medical Monitor Service Has Been Started!")
+            .setSmallIcon(R.drawable.zoom_plate)
+            .setContentIntent(pIntent)
+            .setSound(soundUri)
+             
+            .build();
+        	mNotification.tickerText = "Excuse Us! \n"
+        			+ " Please Take Your Medicine!";
+        	mNotification.flags |= Notification.FLAG_AUTO_CANCEL;
+        NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+ 
+        // If you want to hide the notification after it was selected, do the code below
+        // myNotification.flags |= Notification.FLAG_AUTO_CANCEL;
+         
+        notificationManager.notify(1, mNotification);
+    }
+	
+	public static long getCountingTicker()
+	{
+		return getTicks;
+	}
 }
