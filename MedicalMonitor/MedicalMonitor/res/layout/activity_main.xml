@@ -53,4 +53,14 @@
         android:layout_centerHorizontal="true"
         android:text="@string/button1" />
 
+    <TextView
+        android:id="@+id/tickerTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/counterTextView"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="26dp"
+        android:text="Starting Counter..."
+        android:textAppearance="?android:attr/textAppearanceSmall" />
+
 </RelativeLayout>
