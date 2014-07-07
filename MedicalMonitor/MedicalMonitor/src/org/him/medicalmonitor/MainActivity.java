@@ -164,5 +164,16 @@ public class MainActivity extends Activity {
 	{
 		return;
 	}
+	public void convertSeconds()
+	{
+		int seconds, minutes, hours, days;
+        int milliseconds = 0;
+        
+        seconds = milliseconds/1000;
+        days = seconds / 86400;
+        hours = (seconds/3600) - (days*24);
+        minutes = (seconds/60) - (days*1440) - (hours*60);
+        seconds = seconds - (days*86400) - (hours*3600) - (minutes*60);	
+	}
 	
 }
