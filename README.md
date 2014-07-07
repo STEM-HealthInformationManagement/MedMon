@@ -47,4 +47,6 @@ I would also recommend using Branches because it is Still better, so we can have
 TO DO List For ISRAEL
 ======================================================
 - Work on the Time Counter.
-- Change the user interface to put buttons in the medical setup activity.
+- |✓| Change the user interface to put buttons in the medical setup activity. (Finished by Aakash)
+- Add Medical name box, and other necessary stuff to the medical setup activity.
+- Create another activity to show after medical setup has been saved. 
