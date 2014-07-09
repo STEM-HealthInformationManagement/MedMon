@@ -155,7 +155,7 @@ public class MainActivity extends Activity {
 					trailingZero = "";
 				}
 			}
-<<<<<<< HEAD
+
 		}); */
 
 		saveButton.setOnClickListener(new View.OnClickListener() {
