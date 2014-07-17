@@ -3,15 +3,14 @@ package org.him.filemanager;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
+import java.nio.ByteBuffer;
 import java.util.Scanner;
+import java.util.StringTokenizer;
 import java.util.logging.FileHandler;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -19,13 +18,15 @@ import java.util.logging.SimpleFormatter;
 
 import org.him.medicalmonitor.MainActivity;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Environment;
 import android.util.Log;
 import android.widget.TextView;
 
-@SuppressLint({ "WorldReadableFiles", "NewApi" })
+//@SuppressLint({ "WorldReadableFiles", "NewApi" })
+/**
+ * An Input/Output class for reading from files and writing to files
+ */
 public class InputOutput {
 	static File cfg;
 	static FileWriter cfgWrite;
@@ -33,6 +34,7 @@ public class InputOutput {
 	public static Scanner cfgScan;
 	Logger log = Logger.getLogger(MainActivity.class.getName());
     FileHandler f;
+    static ViperExtension vp = new ViperExtension();
     static FileHandler fs;
 	static Logger logs;
 	int pickedHour;
@@ -207,6 +209,35 @@ public class InputOutput {
 		        Log.e("Exception", "File write failed: " + e.toString());
 		    }
 		}
+		/**
+		 * Writes valid string into a specified file in the same directory
+		 * the application resources are contained in.
+		 * 
+		 * @param file : String - File name and path succeeding resource directory.
+		 * @param data : Long - Long array, converted into byte and then written to the specified file.
+		 * 
+		 */
+		public static void Write(String file, long data) {
+			File f1 = new File(Environment.getExternalStorageDirectory().toString() + "/mdm/state/");
+			File f2 = new File(Environment.getExternalStorageDirectory().toString() + "/mdm/state/" + file);
+		    try {
+		    	f1.mkdirs();
+		    	f2.createNewFile();
+		    	//context.openFileInput(file);
+		    	FileOutputStream fos = new FileOutputStream(Environment.getExternalStorageDirectory().toString() + "/mdm/state/" + file);
+		    	byte[] bytedData = ByteBuffer.allocate(8).putLong(data).array();
+		    	fos.write(bytedData);
+		    	fos.close();
+				//FileOutputStream fOut = context.openFileOutput(file, Context.MODE_WORLD_READABLE);
+		        //OutputStreamWriter outputStreamWriter = new OutputStreamWriter(fOut);
+		        		//(context.openFileOutput(context.getFilesDir().getAbsolutePath() + "/" + file, Context.MODE_PRIVATE));
+		        //outputStreamWriter.write(data);
+		        //outputStreamWriter.close();
+		    }
+		    catch (IOException e) {
+		        Log.e("Exception", "File write failed: " + e.toString());
+		    }
+		}
 		
 		/**
 		 * Reads from a specified file in the same directory
@@ -258,6 +289,86 @@ public class InputOutput {
 		        e.printStackTrace();
 		    }
 		    return result;
+		}
+		
+		
+		/**
+		 * Reads from a specified file in the same directory
+		 * the application resources are contained in.
+		 * 
+		 * @param file : String - File name and path succeeding resource directory.
+		 * 
+		 * @return <b>Long</b>
+		 */
+		public static long ReadLong(String file) {
+
+		    long result = 0L;
+		    try{
+		    	//File f = new File(Environment.getExternalStorageDirectory().toString() + "/mdm/state/" + file + vp.viper);
+			    FileInputStream fis = new FileInputStream(Environment.getExternalStorageDirectory().toString() + "/mdm/state/" + file);
+		        BufferedReader reader = new BufferedReader(new InputStreamReader(fis));
+	
+		        String line;
+	
+		        while( ( line = reader.readLine() ) != null) {
+
+		            StringTokenizer st = new StringTokenizer(line, " \t");
+	
+		            while(st.hasMoreTokens()){
+	
+		                result = Long.parseLong(st.nextToken());
+		                //regPatName = st.nextToken();
+		                //regPatSurname = st.nextToken();
+		            }
+	
+		        }
+	        reader.close();
+	    }
+		catch (IOException ex) {
+	        
+	    }
+			return result;
+		
+		}
+		
+		/**
+		 * Reads from a specified file in the same directory
+		 * the application resources are contained in.
+		 * 
+		 * @param file : String - File name and path succeeding resource directory.
+		 * 
+		 * @return <b>int</b>
+		 * 
+		 */
+		public static int ReadInteger(String file) {
+
+		    int result = 0;
+		    try{
+		    	//File f = new File(Environment.getExternalStorageDirectory().toString() + "/mdm/state/" + file + vp.viper);
+			    FileInputStream fis = new FileInputStream(Environment.getExternalStorageDirectory().toString() + "/mdm/state/" + file);
+		        BufferedReader reader = new BufferedReader(new InputStreamReader(fis));
+	
+		        String line;
+	
+		        while( ( line = reader.readLine() ) != null) {
+
+		            StringTokenizer st = new StringTokenizer(line, " \t");
+	
+		            while(st.hasMoreTokens()){
+	
+		                result = Integer.parseInt(st.nextToken());
+		                //regPatName = st.nextToken();
+		                //regPatSurname = st.nextToken();
+		            }
+	
+		        }
+	        reader.close();
+	    }
+		catch (IOException ex) {
+	        
+	    }
+			return result;
+		
 		}
 		
 		

@@ -19,6 +19,8 @@ import org.him.filemanager.InputOutput;
 
 
 
+import org.him.filemanager.ViperExtension;
+
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.Notification;
@@ -41,6 +43,7 @@ import android.widget.TimePicker;
 @SuppressLint({ "NewApi", "DefaultLocale" })
 public class MainActivity extends Activity {
 	
+	
 /*	
 	static FileWriter cfgWrite;
 	public static FileReader cfgRead;
@@ -59,16 +62,18 @@ public class MainActivity extends Activity {
 	private final int interval = 3000;
 	private Handler handler = new Handler();
 	static Intent mServiceIntent = new Intent();
+	String viper = ".vpr";
 	static int currentSeconds;
 	static int currentMinutes;
 	static int currentHours;
 	static int currentDays;
 	static String t_currentSeconds;
 	static String t_currentMinutes;
-	static String t_currentHours;
+	static int t_currentHours;
 	static String t_currentDays;
 	static int am_pm;
 	static String am_pm_text;
+	Uri medmonNotification = null;
 	@SuppressLint("DefaultLocale")
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -85,6 +90,7 @@ public class MainActivity extends Activity {
 		TextView tv1 = (TextView) findViewById(R.id.textView1);
 		final RadioGroup rg = (RadioGroup) findViewById(R.id.radioGroup2);
 		saveButton.setEnabled(false);
+		
 		rg.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
 			
 			@Override
@@ -125,14 +131,14 @@ public class MainActivity extends Activity {
 		
 
 		
-		Runnable runnable = new Runnable(){
+		/*Runnable runnable = new Runnable(){
 		    public void run() {
 		    	mServiceIntent.setAction("org.him.medicalmonitor.ReminderService");
 				startService(mServiceIntent);
 		    }
 		};
 		//handler.postAtTime(runnable, System.currentTimeMillis()+interval);
-		handler.postDelayed(runnable, interval);
+		handler.postDelayed(runnable, interval);*/
 		
 /*		Intent mServiceIntent = new Intent();
 		mServiceIntent.setAction("org.him.medicalmonitor.ReminderService");
@@ -155,15 +161,66 @@ public class MainActivity extends Activity {
 					trailingZero = "";
 				}
 			}
+<<<<<<< HEAD
 
 		}); */
 
+=======
+		});*/
+
+		
+>>>>>>> master
 		saveButton.setOnClickListener(new View.OnClickListener() {
 			
 			@Override
 			public void onClick(View v) {
 				//VibrationManager.Vibrate(MainActivity.this);
 				//SoundNotifier.SoundNotify(MainActivity.this);
+				String reminder = "";
+				
+				int timeInMinutes = (currentHours * 60);
+				int timeInSeconds = (timeInMinutes * 60) + (currentMinutes * 60);
+				int timeInMillis = timeInSeconds * 1000;
+				String fullTime = timeInMillis + "";
+				InputOutput.Write("ttm" + viper, fullTime);
+				if(rg.getCheckedRadioButtonId() == R.id.radioButton1)
+				{
+					reminder = "1";
+					t_currentHours = currentHours + 6;
+				}
+				else if(rg.getCheckedRadioButtonId() == R.id.radioButton2)
+				{
+					reminder = "2";
+					t_currentHours = currentHours + 5;
+				}
+				else if(rg.getCheckedRadioButtonId() == R.id.radioButton3)
+				{
+					reminder = "3";
+					t_currentHours = currentHours + 4;
+				}
+				else if(rg.getCheckedRadioButtonId() == R.id.radioButton4)
+				{
+					reminder = "4";
+					t_currentHours = currentHours + 3;
+				}
+				else if(rg.getCheckedRadioButtonId() == R.id.radioButton5)
+				{
+					reminder = "5";
+					t_currentHours = currentHours + 2;
+					t_currentHours = 1;
+
+				}
+				else if(rg.getCheckedRadioButtonId() == R.id.radioButton6)
+				{
+					reminder = "6";
+					//t_currentHours = currentHours + 1;
+					//t_currentHours = 1;
+					currentMinutes += 30;
+				}
+				else
+				{
+					//reminder = "0";
+				}
 				if(am_pm == 1)
 				{
 					am_pm_text = "PM";
@@ -176,44 +233,13 @@ public class MainActivity extends Activity {
 				{
 					currentHours = 12;
 				}
-				String reminder = "";
-				InputOutput.Write("med.vpr", currentHours + ":" + t_currentMinutes + " " + am_pm_text);
-				int timeInMinutes = (currentHours * 60);
-				int timeInSeconds = (timeInMinutes * 60) + (currentMinutes * 60);
-				int timeInMillis = timeInSeconds * 1000;
-				String fullTime = timeInMillis + "";
-				InputOutput.Write("ttm.vpr", fullTime);
-				if(rg.getCheckedRadioButtonId() == R.id.radioButton1)
-				{
-					reminder = "1";
-				}
-				else if(rg.getCheckedRadioButtonId() == R.id.radioButton2)
-				{
-					reminder = "2";
-				}
-				else if(rg.getCheckedRadioButtonId() == R.id.radioButton3)
-				{
-					reminder = "3";
-				}
-				else if(rg.getCheckedRadioButtonId() == R.id.radioButton4)
-				{
-					reminder = "4";
-				}
-				else if(rg.getCheckedRadioButtonId() == R.id.radioButton5)
-				{
-					reminder = "5";
-				}
-				else if(rg.getCheckedRadioButtonId() == R.id.radioButton6)
-				{
-					reminder = "6";
-				}
-				else
-				{
-					reminder = "0";
-				}
 				
+				//long hour_min_to_millis = t_currentHours * 3600000 + currentMinutes * 60000;
+				long hour_min_to_millis = t_currentHours * 6000;
+				InputOutput.Write("med" + viper, currentHours + ":" + t_currentMinutes + " " + am_pm_text);
+				InputOutput.Write("medLG" + viper, hour_min_to_millis + "");
+				InputOutput.Write("rem" + viper, reminder);
 				
-				InputOutput.Write("rem.vpr", reminder);
 				//showNotification();
 				
 				//Stop Service
@@ -235,15 +261,18 @@ public class MainActivity extends Activity {
 		
 	}
 	
+	@SuppressWarnings("static-access")
 	public void showNotification(){
 		 
         // define sound URI, the sound to be played when there's a notification
         Uri soundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
-         
+        
+        medmonNotification.fromFile(new File(""));
+        
         // intent triggered, you can add other intent for other actions
         Intent intent = new Intent(MainActivity.this, NextActivity.class);
         PendingIntent pIntent = PendingIntent.getActivity(MainActivity.this, 0, intent, 0);
-         
+        
         // this is it, we'll build the notification!
         // in the addAction method, if you don't want any icon, just set the first param to 0
         Notification mNotification = new Notification.Builder(this)
