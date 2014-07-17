@@ -1,3 +1,5 @@
 *.jar
 MedicalMonitor/MedicalMonitor/gen/android/support/v7/appcompat/R.java
 MedicalMonitor/MedicalMonitor/gen/android/support/v7/appcompat/R.java
+*.cache
+*.dex

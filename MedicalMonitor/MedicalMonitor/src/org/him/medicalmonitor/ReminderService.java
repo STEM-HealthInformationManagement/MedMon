@@ -6,10 +6,12 @@ import org.him.filemanager.InputOutput;
 
 import android.R;
 import android.annotation.SuppressLint;
+import android.app.AlarmManager;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
+import android.content.Context;
 import android.content.Intent;
 import android.media.RingtoneManager;
 import android.net.Uri;
@@ -26,9 +28,11 @@ public class ReminderService extends Service {
     private NotificationManager mNM;
     
 	Timer timer = new Timer();
-	int countEvery;
+	long countEvery;
+	CountDownTimer ct;
 
 	private final int interval = 3000;
+	String viper = ".vpr";
 	private Handler handler = new Handler();
 
     // Unique Identification Number for the Notification.
@@ -63,7 +67,11 @@ public class ReminderService extends Service {
 		handler.postDelayed(runnable, interval);*/
         System.out.println("Service Started!");
         
-        String checkReminder = InputOutput.Read("rem.vpr");
+        String checkReminder = InputOutput.Read("rem" + viper);
+        countEvery = InputOutput.ReadLong("medLG" + viper); 
+        
+        final int getPrescriptionTiming = InputOutput.ReadInteger("rem" + viper);
+        System.out.println(getPrescriptionTiming);
         
         int seconds, minutes, hours, days;
         int milliseconds = 0;
@@ -74,7 +82,14 @@ public class ReminderService extends Service {
         minutes = (seconds/60) - (days*1440) - (hours*60);
         seconds = seconds - (days*86400) - (hours*3600) - (minutes*60);	
         
-        if(checkReminder.equals("1"))
+        //AlarmManager am = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+        
+        
+        
+        //long time = c.getLong(c.getColumnIndex(Notification.COL_DATETIME));
+        
+        
+/*        if(checkReminder.equals("1"))
         {
         	countEvery = 6 * 21600; 
         }
@@ -101,17 +116,37 @@ public class ReminderService extends Service {
         else
         {
         	countEvery = 0;
-        }
-        new CountDownTimer(countEvery, 1000) {
+        }*/
+        ct = new CountDownTimer(countEvery, 1000) {
 
             public void onTick(long millisUntilFinished) {
             	//Do Nothing Yet
-            	getTicks += millisUntilFinished; 
+            	getTicks = millisUntilFinished; 
             	getTicks--;
             }
 
             public void onFinish() {
-            	showMedicalNotification();
+            	for(int i = 0; i <= getPrescriptionTiming; i++)
+            	{
+            		System.out.println(i);
+            		
+            		if(i == getPrescriptionTiming)
+            		{
+            			System.out.println("exiting loop...");
+            			break;
+            		}
+            		else
+            		{
+            			//ct.start();
+            			showMedicalNotification();
+            		}
+            		try {
+						Thread.sleep(countEvery);
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+            	}
             }
          }.start();
         
@@ -133,7 +168,7 @@ public class ReminderService extends Service {
         mNM.cancel(NOTIFICATION);
 
         // Tell the user we stopped.
-        Toast.makeText(this, "Medicine Reminder Saved!", Toast.LENGTH_SHORT).show();
+        //Toast.makeText(this, "Medicine Reminder Saved!", Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -220,8 +255,8 @@ public class ReminderService extends Service {
         // in the addAction method, if you don't want any icon, just set the first param to 0
         Notification mNotification = new Notification.Builder(this)
              
-            .setContentTitle("Alert!")
-            .setContentText("Medical Monitor Service Has Been Started!")
+            .setContentTitle("Excuse Us!")
+            .setContentText("Please Take Your Medicine")
             .setSmallIcon(R.drawable.zoom_plate)
             .setContentIntent(pIntent)
             .setSound(soundUri)
