@@ -83,7 +83,7 @@ public class MainActivity extends Activity {
 		final Button saveButton = (Button) findViewById(R.id.setupButton);
 		//TimePicker tp = (TimePicker) findViewById(R.id.timePicker1);
 		TextView tv1 = (TextView) findViewById(R.id.textView1);
-		final RadioGroup rg = (RadioGroup) findViewById(R.id.radioGroup1);
+		final RadioGroup rg = (RadioGroup) findViewById(R.id.radioGroup2);
 		saveButton.setEnabled(false);
 		rg.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
 			

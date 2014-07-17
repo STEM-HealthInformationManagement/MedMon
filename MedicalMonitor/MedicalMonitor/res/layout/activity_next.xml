@@ -5,7 +5,7 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="706dp"
+        android:layout_height="1093dp"
         tools:context="${packageName}.${activityClass}" >
 
         <TextView
@@ -35,60 +35,104 @@
             android:text="@string/prescribedTimeMssg"
             android:textAppearance="?android:attr/textAppearanceLarge" />
 
-        <RadioGroup
-            android:id="@+id/radioGroup1"
+        <TextView
+            android:id="@+id/textView5"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
+            android:layout_below="@+id/editText1"
+            android:layout_marginTop="29dp"
+            android:layout_toLeftOf="@+id/textView2"
+            android:text="@string/description" />
+
+        <EditText
+            android:id="@+id/editText2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/textView5"
+            android:layout_alignLeft="@+id/textView1"
+            android:ems="10" />
+
+        <EditText
+            android:id="@+id/editText1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/textView4"
+            android:layout_alignLeft="@+id/editText2"
+            android:ems="10" />
+
+        <TextView
+            android:id="@+id/textView4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_below="@+id/textView1"
-            android:layout_marginTop="18dp" >
+            android:layout_toLeftOf="@+id/editText1"
+            android:text="@string/medicineName" />
+
+        <RadioGroup
+            android:id="@+id/radioGroup2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/textView5"
+            android:layout_alignRight="@+id/editText2"
+            android:layout_below="@+id/textView5"
+            android:layout_marginLeft="19dp"
+            android:layout_marginTop="38dp" >
+
+            <TextView
+                android:id="@+id/textView3"
+                android:layout_width="259dp"
+                android:layout_height="47dp"
+                android:text="@string/timesPerDay"
+                android:textSize="21sp" />
 
             <RadioButton
                 android:id="@+id/radioButton1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="71dp"
                 android:text="@string/onceADay"
-                android:textSize="30sp" />
+                android:textSize="21sp" />
 
             <RadioButton
                 android:id="@+id/radioButton2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="22dp"
+                android:layout_marginTop="26dp"
                 android:text="@string/twiceADay"
-                android:textSize="30sp" />
+                android:textSize="21sp" />
 
             <RadioButton
                 android:id="@+id/radioButton3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="32dp"
+                android:layout_marginTop="26dp"
                 android:text="@string/threeTimesADay"
-                android:textSize="30sp" />
+                android:textSize="21sp" />
 
             <RadioButton
                 android:id="@+id/radioButton4"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="30dp"
+                android:layout_marginTop="27dp"
                 android:text="@string/fourTimesADay"
-                android:textSize="30sp" />
+                android:textSize="21sp" />
 
             <RadioButton
                 android:id="@+id/radioButton5"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="32dp"
+                android:layout_marginTop="28dp"
                 android:text="@string/fiveTimesADay"
-                android:textSize="30sp" />
+                android:textSize="21sp" />
 
             <RadioButton
                 android:id="@+id/radioButton6"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="26dp"
+                android:layout_marginTop="28dp"
                 android:text="@string/sixTimesADay"
-                android:textSize="30sp" />
+                android:textSize="21sp" />
+
         </RadioGroup>
 
     </RelativeLayout>

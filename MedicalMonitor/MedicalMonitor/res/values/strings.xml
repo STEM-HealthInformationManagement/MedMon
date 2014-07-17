@@ -24,6 +24,9 @@
     <string name="fourTimesADay">Four Times A Day</string>
     <string name="fiveTimesADay">Five Times A Day</string>
     <string name="sixTimesADay">Six Times A Day</string>
+    <string name="medicineName"> Medicine Name</string>
+    <string name="description">Description</string>
+    <string name="timesPerDay">How Many Times Per Day?</string>
 
     
 
