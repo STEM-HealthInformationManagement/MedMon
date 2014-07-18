@@ -165,11 +165,7 @@ public class MainActivity extends Activity {
 
 		}); */
 
-=======
-		});*/
 
-		
->>>>>>> master
 		saveButton.setOnClickListener(new View.OnClickListener() {
 			
 			@Override
