@@ -5,6 +5,8 @@ import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.Calendar;
 import java.util.Timer;
+
+
 import java.util.TimerTask;
 
 import org.him.filemanager.InputOutput;
@@ -33,7 +35,6 @@ import android.os.Handler;
 import android.text.format.Time;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.TimePicker;
@@ -178,13 +179,6 @@ public class MainActivity extends Activity {
 				int timeInMillis = timeInSeconds * 1000;
 				String fullTime = timeInMillis + "";
 				InputOutput.Write("ttm" + viper, fullTime);
-				
-				EditText medName = (EditText) findViewById(R.id.editText1);
-				InputOutput.Write("nme" + viper, medName.getText().toString());
-				
-				EditText medDescription = (EditText) findViewById(R.id.editText2);
-				InputOutput.Write("dspn" + viper, medDescription.getText().toString());
-				
 				if(rg.getCheckedRadioButtonId() == R.id.radioButton1)
 				{
 					reminder = "1";
