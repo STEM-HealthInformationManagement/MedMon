@@ -15,5 +15,10 @@
     <string name="title_activity_vibrate">Vibrate</string>
     <string name="local_service_started">svc (on)</string>
     <string name="title_activity_static_viewer">Static Viewer</string>
-
+	<string name="onceADay">Once A Day</string>
+    <string name="twiceADay">Twice A Day</string>
+    <string name="threeTimesADay">Three Times A Day</string>
+    <string name="fourTimesADay">Four Times A Day</string>
+    <string name="fiveTimesADay">Five Times A Day</string>
+    <string name="sixTimesADay">Six Times A Day</string>
 </resources>

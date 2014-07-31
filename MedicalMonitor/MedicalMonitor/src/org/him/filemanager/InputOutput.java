@@ -193,9 +193,10 @@ public class InputOutput {
 		    	f1.mkdirs();
 		    	f2.createNewFile();
 		    	//context.openFileInput(file);
-		    	FileWriter fw = new FileWriter(Environment.getExternalStorageDirectory().toString() + "/mdm/state/" + file);
-		    	fw.write(data);
-		    	fw.close();
+		    	FileOutputStream fos = new FileOutputStream(Environment.getExternalStorageDirectory().toString() + "/mdm/state/" + file);
+		    	byte[] bytedData = data.getBytes();
+		    	fos.write(bytedData);
+		    	fos.close();
 				//FileOutputStream fOut = context.openFileOutput(file, Context.MODE_WORLD_READABLE);
 		        //OutputStreamWriter outputStreamWriter = new OutputStreamWriter(fOut);
 		        		//(context.openFileOutput(context.getFilesDir().getAbsolutePath() + "/" + file, Context.MODE_PRIVATE));
