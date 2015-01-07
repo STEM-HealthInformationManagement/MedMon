@@ -39,7 +39,11 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
-/**THIS USES ACTIVITY_NEXT.XML. IT IS THE SECOND LAYOUT, NOT THE MAIN.*/
+/**THIS USES ACTIVITY_NEXT.XML. IT IS THE SECOND LAYOUT, NOT THE MAIN.<br>
+ * <br>
+ * <b>NOTE: </b>Before using this Activity, make SURE that the <i>NetConnector()</i> class is <br>
+ * used to call one of its connection checking methods, and pass a <br>
+ * StringExtra of NAME: "netStat" and VALUE: "true | false" based on the internet connection.*/
 @SuppressLint({ "NewApi", "DefaultLocale" })
 public class MainActivity extends Activity {
 	
@@ -81,7 +85,7 @@ public class MainActivity extends Activity {
 		setContentView(R.layout.activity_next);
 		final Button saveButton = (Button) findViewById(R.id.setupButton);
 		//TimePicker tp = (TimePicker) findViewById(R.id.timePicker1);
-		TextView tv1 = (TextView) findViewById(R.id.textView1);
+		TextView tv1 = (TextView) findViewById(R.id.netStatusTextView);
 		final RadioGroup rg = (RadioGroup) findViewById(R.id.radioGroup1);
 		saveButton.setEnabled(false);
 		
@@ -244,7 +248,16 @@ public class MainActivity extends Activity {
 		//tv1.setText(System.getProperty("user.dir"));
 		//tv1.setText(getApplicationInfo().dataDir);
 		//File f = new File(Environment.getRootDirectory(), "");
-		tv1.setText(Environment.getRootDirectory().toString());
+		
+		String netStat = getIntent().getStringExtra("netStat");
+		if(netStat.equals("true"))
+		{
+			tv1.setText("");
+		}
+		else
+		{
+			tv1.setText("You're not connected to the internet!");
+		}
 		
 	}
 	

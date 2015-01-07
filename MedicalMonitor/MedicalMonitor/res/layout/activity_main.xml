@@ -7,7 +7,7 @@
     tools:ignore="MergeRootFrame" >
 
     <TextView
-        android:id="@+id/textView1"
+        android:id="@+id/netStatusTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/analogClock1"
@@ -21,7 +21,7 @@
         android:id="@+id/analogClock1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/textView1"
+        android:layout_below="@+id/netStatusTextView"
         android:layout_centerHorizontal="true" />
 
     <TextView

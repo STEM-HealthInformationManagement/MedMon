@@ -10,8 +10,11 @@ public class SoundNotifier {
 	public static void SoundNotify(Activity activity)
 	{
 		try {
+			//Get Direct path to default ringtone.
 		    Uri notification = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+		    //Use direct path to ringtone.
 		    Ringtone r = RingtoneManager.getRingtone(activity.getApplicationContext(), notification);
+		    //Play ringtone
 		    r.play();
 		} catch (Exception e) {
 		    e.printStackTrace();

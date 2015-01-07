@@ -15,10 +15,33 @@
     <string name="title_activity_vibrate">Vibrate</string>
     <string name="local_service_started">svc (on)</string>
     <string name="title_activity_static_viewer">Static Viewer</string>
-	<string name="onceADay">Once A Day</string>
+    <string name="onceADay">Once A Day</string>
     <string name="twiceADay">Twice A Day</string>
     <string name="threeTimesADay">Three Times A Day</string>
     <string name="fourTimesADay">Four Times A Day</string>
     <string name="fiveTimesADay">Five Times A Day</string>
     <string name="sixTimesADay">Six Times A Day</string>
+    <string name="title_activity_init_viewer">InitViewer</string>
+    <string name="title_activity_doctor_pane">Doctor Panel</string>
+    <string name="title_section1">Section 1</string>
+    <string name="title_section2">Section 2</string>
+    <string name="title_section3">Section 3</string>
+    <string name="title_activity_doctor_panel">Doctor Panel</string>
+    <string name="title_activity_doctor_slide">Doctor</string>
+    <string name="doctor_panel">Doctor\'s Panel</string>
+    <string name="title_activity_panel">Panel</string>
+    <string name="title_activity_drawer_test">Drawer Test</string>
+
+    <string-array name="planets_array">
+        <item>Doctor\'s Panel</item>
+        <item>Panel</item>
+    </string-array>
+
+    <string name="drawer_open">Open Drawer</string>
+    <string name="drawer_close">Close Drawer</string>
+    <string name="app_not_available">An Error Occurred</string>
+    <string name="title_activity_patient_panel">Patient Panel</string>
+    <string name="title_activity_about">About</string>
+    <string name="title_activity_help">Help</string>
+
 </resources>

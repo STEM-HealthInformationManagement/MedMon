@@ -34,7 +34,7 @@ public class InputOutput {
 	public static Scanner cfgScan;
 	Logger log = Logger.getLogger(MainActivity.class.getName());
     FileHandler f;
-    static ViperExtension vp = new ViperExtension();
+    static String viper = ".vpr";
     static FileHandler fs;
 	static Logger logs;
 	int pickedHour;

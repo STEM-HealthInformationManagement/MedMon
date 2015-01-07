@@ -5,17 +5,8 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="706dp"
+        android:layout_height="769dp"
         tools:context="${packageName}.${activityClass}" >
-
-        <TextView
-            android:id="@+id/textView2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true"
-            android:text="@string/medicineSetUp"
-            android:textAppearance="?android:attr/textAppearanceLarge" />
 
         <Button
             android:id="@+id/setupButton"
@@ -25,22 +16,13 @@
             android:layout_centerHorizontal="true"
             android:text="@string/button2" />
 
-        <TextView
-            android:id="@+id/textView1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignRight="@+id/setupButton"
-            android:layout_below="@+id/textView2"
-            android:layout_marginTop="20dp"
-            android:text="@string/prescribedTimeMssg"
-            android:textAppearance="?android:attr/textAppearanceLarge" />
-
         <RadioGroup
             android:id="@+id/radioGroup1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
-            android:layout_below="@+id/textView1"
+            android:layout_alignParentRight="true"
+            android:layout_below="@+id/netStatusTextView"
             android:layout_marginTop="18dp" >
 
             <RadioButton
@@ -90,6 +72,75 @@
                 android:text="@string/sixTimesADay"
                 android:textSize="30sp" />
         </RadioGroup>
+
+        <TextView
+            android:id="@+id/netStatusTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignRight="@+id/setupButton"
+            android:layout_below="@+id/backViewer"
+            android:layout_marginTop="132dp"
+            android:text="@string/prescribedTimeMssg"
+            android:textAppearance="?android:attr/textAppearanceLarge" />
+
+        <TextView
+            android:id="@+id/textView4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/backViewer"
+            android:layout_below="@+id/backViewer"
+            android:layout_marginTop="42dp"
+            android:text="Medicine\nDescription" />
+
+        <EditText
+            android:id="@+id/editText1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/backViewer"
+            android:layout_toRightOf="@+id/textView4"
+            android:ems="10" >
+
+            <requestFocus />
+        </EditText>
+
+        <EditText
+            android:id="@+id/editText2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/editText1"
+            android:layout_alignTop="@+id/textView4"
+            android:ems="10" />
+
+        <TextView
+            android:id="@+id/textView1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:background="@drawable/bg_med_interface"
+            android:text=""
+            android:textAppearance="?android:attr/textAppearanceLarge" />
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/textView1"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="16dp"
+            android:text="@string/medicineSetUp"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textColor="#FFFFFF" />
+
+        <TextView
+            android:id="@+id/backViewer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/textView1"
+            android:layout_marginTop="36dp"
+            android:layout_toLeftOf="@+id/textView2"
+            android:text="Medicine\nName" />
 
     </RelativeLayout>
 
