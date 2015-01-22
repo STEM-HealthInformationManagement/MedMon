@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="primaryColor">#2196F3</color>
+    <color name="primaryColorDark">#0D47A1</color>
+    <color name="menu_item_primary">#2196F3</color>
+    <color name="menu_item_active">#0D47A1</color>
+</resources>
